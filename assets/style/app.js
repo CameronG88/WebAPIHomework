@@ -35,6 +35,7 @@ var highScores = document.querySelector("#highscores");
 
 var scoreEl = document.querySelector("#score");
 
+
 // create clobal variables and a variable to hold our index
 var timer = 60;
 var qindex = 0;
@@ -64,11 +65,10 @@ function showTimer() {
     timerEl.textContent = "Time Left: " + timer;
     scoreEl.textContent = "Score: " + score;
     // create setInterval and store it to a variable
-    var timerInterval = setInterval(function () {
+    timerInterval = setInterval(function () {
         timer--;
         timerEl.textContent = "Time Left: " + timer;
         if (timer === 0) {
-            clearInterval(timerInterval);
             endGame();
         }
 
@@ -79,6 +79,8 @@ function showTimer() {
 function nextQuestion() {
     // variable to hold the current question
     var currentQuestion = questions[qindex];
+
+    console.log(currentQuestion)
     // clear the start page contents to show the question and answers
     questionBoxEl.textContent = "";
     // create question using the title of current question
@@ -115,7 +117,7 @@ function checkAnswer() {
         timerEl.textContent = timer;
     }
     // end game once we run out of questions
-    if (qindex === questions.length - 1) {
+    if (qindex === questions.length) {
         endGame()
     } else {
         nextQuestion();
@@ -123,9 +125,9 @@ function checkAnswer() {
 }
 
 function endGame() {
-    clearInterval(timerInterval)
+    clearInterval(timerInterval);
     questionBoxEl.style.display = "none"
-    
+
 }
 
 welcomePage();
