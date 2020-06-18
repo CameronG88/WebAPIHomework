@@ -2,12 +2,12 @@ var questions = [
     {
         title: "Example Question 1:",
         choices: ["Choice 1", "Choice 2", "Choice 3", "Choice 4"],
-        answer: "answer from choices"
+        answer: "Choice 3"
     },
     {
         title: "Example Question 2:",
         choices: ["Choice 1", "Choice 2", "Choice 3", "Choice 4"],
-        answer: "answer from choices"
+        answer: "Choice 1"
     }
 ];
 
@@ -23,8 +23,6 @@ var questionText = document.createElement("p");
 
 var highScores = document.querySelector("#highscores");
 
-var answerDiv = document.querySelector("#answer-choices");
-
 // create clobal variables and a variable to hold our index
 var timer = 60;
 var qindex = 0;
@@ -36,7 +34,7 @@ function welcomePage() {
     startBtn.textContent = "Start Quiz";
 
     questionBoxEl.appendChild(startBtn);
-    
+
     questionBoxEl.appendChild(startText);
 }
 
@@ -65,50 +63,39 @@ function showTimer() {
 // function that stores the current question 
 function nextQuestion() {
     // variable to hold the current question
-    var currentQuestion = questions[index];
-
+    var currentQuestion = questions[qindex];
+    // clear the start page contents to show the question and answers
     questionBoxEl.textContent = "";
-
+    // create question using the title of current question
     questionText.textContent = currentQuestion.title;
-
+    // display question in the now empty questionBox
     questionBoxEl.appendChild(questionText);
-
-    // for (let index = 0; index < currentQuestion.choices.length; index++) {
-
-
-    //     var answerBtn = document.createElement("button");
-    //     answerBtn.classList.add("choiceBtn");
-    //     answerBtn.textContent = currentQuestion.choices[index];
-    //     answersDiv.appendChild(answerBtn)
-
-    // }
-    // empty container so questions dont stack on top of each other when you appened next question
-
-    // add current uestion title which is the actual question to appear in the container
-    // create a div element to wrap the answer choices
-
+    // create a div to display answer choice buttons
     var answersDiv = document.createElement("div");
+    // create for loop to generate buttons based on the array of choices from the object
+    for (let index = 0; index < currentQuestion.choices.length; index++) {
 
-// for loop to loop through the questions and create div to display question and buttons to choose
-  
-    // );
+        var answerBtn = document.createElement("button");
+        answerBtn.classList.add("choiceBtn");
+        answerBtn.textContent = currentQuestion.choices[index];
+        answersDiv.appendChild(answerBtn);
+
+    }
+    questionBoxEl.appendChild(answersDiv);
+
 };
 
 function checkAnswer(event) {
     // if event.target.matches (choiceBtn class)
     if (event.target.matches(".choiceBtn")) {
         // Logic to check for right answer
-        index++;
+        qindex++;
         nextQuestion()
     }
 }
 
 welcomePage();
-// function when start Button is clicked hides the welcome heading and start button
-// then function that shows the first question and starts timer
 
-// function that handles the timer
 // event listener to start the quiz on button click
 startBtn.addEventListener("click", startQuiz);
-
-// document.addEventListener("click", checkAnswer);
+document.addEventListener("click", checkAnswer);
